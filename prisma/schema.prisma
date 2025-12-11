@@ -1,0 +1,199 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model IndividualAccount {
+  id           String    @id @default(uuid()) @db.Uuid
+  name         String?   @db.VarChar(255)
+  email        String    @unique @db.VarChar(255)
+  phone        String?   @db.VarChar(20)
+  cpf          String?   @unique @db.VarChar(255)
+  birthday     DateTime? @db.Date
+  cep          String?   @db.VarChar(10)
+  state        String?   @db.VarChar(2)
+  address      String?   @db.VarChar(255)
+  neighborhood String?   @db.VarChar(255)
+  city         String?   @db.VarChar(255)
+  number       String?   @db.VarChar(20)
+  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  deletedAt    DateTime? @map("deleted_at") @db.Timestamp(6)
+
+  Auth Auth[]
+
+  @@map("individual_accounts")
+}
+
+model CorporateAccount {
+  id           String    @id @default(uuid()) @db.Uuid
+  ownerName    String?   @map("owner_name") @db.VarChar(255)
+  socialReason String?   @map("social_reason") @db.VarChar(255)
+  email        String?   @unique @db.VarChar(255)
+  phone        String?   @db.VarChar(20)
+  cnpj         String?   @unique @db.VarChar(255)
+  cep          String?   @db.VarChar(10)
+  state        String?   @db.VarChar(2)
+  address      String?   @db.VarChar(255)
+  neighborhood String?   @db.VarChar(255)
+  city         String?   @db.VarChar(255)
+  number       String?   @db.VarChar(20)
+  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  deletedAt    DateTime? @map("deleted_at") @db.Timestamp(6)
+
+  Auth Auth[]
+
+  @@map("corporate_accounts")
+}
+
+model Auth {
+  id                  String    @id @default(uuid()) @db.Uuid
+  name                String?   @db.VarChar(255)
+  surname             String?   @db.VarChar(255)
+  email               String?   @unique @db.VarChar(255)
+  isMissingOnboarding Boolean   @default(true)
+  tokenCount          Int       @default(0) @map("token_count")
+  individualAccountId String?   @map("individual_account_id") @db.Uuid
+  corporateAccountId  String?   @map("corporate_account_id") @db.Uuid
+  createdAt           DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt           DateTime? @updatedAt @map("updated_at") @db.Timestamp(6)
+  deletedAt           DateTime? @map("deleted_at") @db.Timestamp(6)
+
+  corporateAccount  CorporateAccount?  @relation(fields: [corporateAccountId], references: [id], onDelete: Cascade)
+  individualAccount IndividualAccount? @relation(fields: [individualAccountId], references: [id], onDelete: Cascade)
+  subscriptions     Subscription[]
+  searchHistory     SearchHistory[]
+  tokenTransactions TokenTransaction[]
+
+  @@map("auth")
+}
+
+enum PlanPeriodicity {
+  DAYS
+  MONTHLY
+  ANNUAL
+
+  @@map("plan_periodicity")
+}
+
+model Plan {
+  id           String          @id @default(uuid()) @db.Uuid
+  name         String          @db.VarChar(255)
+  description  String?         @db.Text
+  amount       Decimal         @db.Decimal(10, 2)
+  periodicity  PlanPeriodicity
+  tokenCost    Int             @default(0) @map("token_cost")
+  isActive     Boolean         @default(true) @map("is_active")
+  createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime        @updatedAt @map("updated_at") @db.Timestamp(6)
+  deletedAt    DateTime?       @map("deleted_at") @db.Timestamp(6)
+
+  subscriptions Subscription[]
+
+  @@map("plans")
+}
+
+enum SubscriptionStatus {
+  PENDING
+  ACTIVE
+  CANCELED
+  EXPIRED
+
+  @@map("subscription_status")
+}
+
+model Subscription {
+  id                  String             @id @default(uuid()) @db.Uuid
+  authId              String             @map("auth_id") @db.Uuid
+  planId              String             @map("plan_id") @db.Uuid
+  zyonSubscriptionId  String?            @unique @map("zyon_subscription_id") @db.VarChar(255)
+  status              SubscriptionStatus @default(PENDING)
+  startDate           DateTime?          @map("start_date") @db.Timestamp(6)
+  endDate             DateTime?          @map("end_date") @db.Timestamp(6)
+  nextPaymentDate     DateTime?          @map("next_payment_date") @db.Timestamp(6)
+  createdAt           DateTime           @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt           DateTime           @updatedAt @map("updated_at") @db.Timestamp(6)
+  deletedAt           DateTime?          @map("deleted_at") @db.Timestamp(6)
+
+  auth     Auth      @relation(fields: [authId], references: [id], onDelete: Cascade)
+  plan     Plan      @relation(fields: [planId], references: [id], onDelete: Restrict)
+  payments Payment[]
+
+  @@map("subscriptions")
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELED
+  REFUNDED
+
+  @@map("payment_status")
+}
+
+model Payment {
+  id            String        @id @default(uuid()) @db.Uuid
+  subscriptionId String        @map("subscription_id") @db.Uuid
+  transactionId String?       @unique @map("transaction_id") @db.VarChar(255)
+  amount        Decimal       @db.Decimal(10, 2)
+  status        PaymentStatus @default(PENDING)
+  pixQrCode     String?       @map("pix_qr_code") @db.Text
+  pixCopyPaste  String?       @map("pix_copy_paste") @db.Text
+  expiresAt     DateTime?     @map("expires_at") @db.Timestamp(6)
+  paidAt        DateTime?     @map("paid_at") @db.Timestamp(6)
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamp(6)
+  deletedAt     DateTime?     @map("deleted_at") @db.Timestamp(6)
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model SearchHistory {
+  id         String   @id @default(uuid()) @db.Uuid
+  authId     String   @map("auth_id") @db.Uuid
+  searchType String   @map("search_type") @db.VarChar(50)
+  searchInput String  @map("search_input") @db.VarChar(255)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  auth Auth @relation(fields: [authId], references: [id], onDelete: Cascade)
+
+  @@index([authId])
+  @@index([createdAt])
+  @@map("search_history")
+}
+
+enum TokenTransactionType {
+  DEDUCTION
+  RESET
+  REFUND
+
+  @@map("token_transaction_type")
+}
+
+model TokenTransaction {
+  id            String               @id @default(uuid()) @db.Uuid
+  authId        String               @map("auth_id") @db.Uuid
+  type          TokenTransactionType
+  amount        Int
+  description   String?              @db.VarChar(255)
+  searchType    String?              @map("search_type") @db.VarChar(50)
+  balanceBefore Int                  @map("balance_before")
+  balanceAfter  Int                  @map("balance_after")
+  createdAt     DateTime             @default(now()) @map("created_at") @db.Timestamp(6)
+
+  auth Auth @relation(fields: [authId], references: [id], onDelete: Cascade)
+
+  @@index([authId])
+  @@index([createdAt])
+  @@map("token_transactions")
+}

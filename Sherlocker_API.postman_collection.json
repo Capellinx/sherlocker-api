@@ -1,0 +1,632 @@
+{
+	"info": {
+		"_postman_id": "sherlocker-api-collection",
+		"name": "Sherlocker API - Complete",
+		"description": "Collection completa para testar a API do Sherlocker com todos os endpoints de autenticação e onboarding",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"João\",\n  \"surname\": \"Silva\",\n  \"email\": \"joao@email.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"joao@email.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_OTP_TOKEN_HERE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"otp\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/validate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Onboarding",
+			"item": [
+				{
+					"name": "Individual Onboarding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao@email.com\",\n  \"phone\": \"11999887766\",\n  \"cpf\": \"12345678901\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/onboarding/individual",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"onboarding",
+								"individual"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Corporate Onboarding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ownerName\": \"Maria Santos\",\n  \"email\": \"maria@empresa.com\",\n  \"phone\": \"11888776655\",\n  \"cnpj\": \"12345678000195\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/onboarding/corporate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"onboarding",
+								"corporate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search - Mind API",
+			"item": [
+				{
+					"name": "Search by CNPJ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/search/cnpj/12345678000195",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"cnpj",
+								"12345678000195"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by CPF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/search/cpf/12345678901",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"cpf",
+								"12345678901"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/search/email/teste@email.com?page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"email",
+								"teste@email.com"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/search/nome/João?page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"nome",
+								"João"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Phone",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/search/phone/11999887766",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search",
+								"phone",
+								"11999887766"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payments - ZyonPay",
+			"item": [
+				{
+					"name": "Create Pix Payment (Subscription)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_AUTH_TOKEN_HERE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"planId\": \"PLAN_UUID_HERE\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/payments/pix",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"payments",
+								"pix"
+							]
+						},
+						"description": "Cria uma assinatura recorrente via Pix usando ZyonPay.\n\nRetorna:\n- paymentId: ID do pagamento no Sherlocker\n- subscriptionId: ID da assinatura no Sherlocker\n- transactionId: ID da transação na ZyonPay\n- zyonSubscriptionId: ID da assinatura na ZyonPay\n- pixQrCode: QR Code em base64\n- pixCopyPaste: Código Pix Copia e Cola\n- pixQrCodeImage: URL da imagem do QR Code\n- nextChargeAt: Data da próxima cobrança\n- expiresAt: Expiração do pagamento (24h)\n\nExemplo de resposta:\n{\n  \"success\": true,\n  \"data\": {\n    \"paymentId\": \"uuid\",\n    \"subscriptionId\": \"uuid\",\n    \"transactionId\": \"clwuwmn4i0007emp9lgn66u1h\",\n    \"zyonSubscriptionId\": \"cm9hf2cly0004xwvpl5mt1yj7\",\n    \"amount\": 9900,\n    \"pixQrCode\": \"data:image/png;base64,iVBORw0...\",\n    \"pixCopyPaste\": \"00020101021126530014BR.GOV.BCB.PIX...\",\n    \"pixQrCodeImage\": \"https://api.gateway.com/pix/qr/...\",\n    \"nextChargeAt\": \"2025-12-08T15:30:00.000Z\",\n    \"expiresAt\": \"2025-11-09T23:59:59.000Z\"\n  }\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook - Payment Confirmation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"transactionId\": \"TRANSACTION_ID_FROM_ZYONPAY\",\n  \"status\": \"PAID\",\n  \"paidAt\": \"2025-11-08T15:30:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/payments/webhook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"payments",
+								"webhook"
+							]
+						},
+						"description": "Endpoint público para receber callbacks da ZyonPay.\n\nStatus possíveis:\n- PAID: Pagamento confirmado\n- FAILED: Pagamento falhou\n- CANCELED: Pagamento cancelado\n- REFUNDED: Pagamento reembolsado\n\nQuando PAID:\n- Ativa a assinatura\n- Define startDate e endDate\n- Envia email de confirmação"
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook - Payment Failed",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"transactionId\": \"TRANSACTION_ID_FROM_ZYONPAY\",\n  \"status\": \"FAILED\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/payments/webhook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"payments",
+								"webhook"
+							]
+						},
+						"description": "Simula webhook da ZyonPay indicando falha no pagamento.\n\nQuando status = FAILED:\n- Pagamento marcado como FAILED\n- Assinatura cancelada (CANCELED)\n\nResposta esperada:\n{\n  \"success\": true,\n  \"message\": \"Webhook processado com sucesso\"\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook - Payment Canceled",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"transactionId\": \"TRANSACTION_ID_FROM_ZYONPAY\",\n  \"status\": \"CANCELED\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/payments/webhook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"payments",
+								"webhook"
+							]
+						},
+						"description": "Simula webhook da ZyonPay indicando cancelamento.\n\nQuando status = CANCELED:\n- Pagamento marcado como CANCELED\n- Assinatura cancelada (CANCELED)\n\nResposta esperada:\n{\n  \"success\": true,\n  \"message\": \"Webhook processado com sucesso\"\n}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📋 Fluxo Completo de Teste",
+			"item": [
+				{
+					"name": "1️⃣ Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Teste\",\n  \"surname\": \"Usuario\",\n  \"email\": \"teste@exemplo.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2️⃣ Validate OTP (Copy token from step 1)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer COLE_AQUI_O_TOKEN_DO_REGISTER"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"otp\": \"COLE_AQUI_O_OTP_DO_EMAIL\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/validate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3️⃣ Individual Onboarding (Copy token from step 2)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer COLE_AQUI_O_TOKEN_DO_VALIDATE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Teste Usuario\",\n  \"email\": \"teste@exemplo.com\",\n  \"phone\": \"11999888777\",\n  \"cpf\": \"12345678901\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/onboarding/individual",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"onboarding",
+								"individual"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4️⃣ Create Pix Payment (Copy token from step 2)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer COLE_AQUI_O_TOKEN_DO_VALIDATE"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"planId\": \"COLE_AQUI_O_UUID_DO_PLANO\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/payments/pix",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"payments",
+								"pix"
+							]
+						},
+						"description": "Criar um plano primeiro no Prisma Studio:\nnpx prisma studio\n\nOu via SQL:\nINSERT INTO \"Plan\" (id, name, amount, periodicity, \"isActive\")\nVALUES (gen_random_uuid(), 'Plano Mensal', 9900, 'MONTHLY', true);"
+					},
+					"response": []
+				},
+				{
+					"name": "5️⃣ Simulate Payment Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"transactionId\": \"COLE_AQUI_O_TRANSACTION_ID_DO_STEP_4\",\n  \"status\": \"PAID\",\n  \"paidAt\": \"2025-11-08T15:30:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/payments/webhook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"payments",
+								"webhook"
+							]
+						},
+						"description": "Simula o callback da ZyonPay confirmando o pagamento.\nIsso irá:\n1. Marcar o pagamento como PAID\n2. Ativar a subscription\n3. Enviar email de confirmação"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Script para configurações automáticas se necessário"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Testes automáticos podem ser adicionados aqui"
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,118 @@
+# ===========================
+# Git
+# ===========================
+.git
+.gitignore
+.gitattributes
+
+# ===========================
+# Dependencies & Package Managers
+# ===========================
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+# pnpm-lock.yaml - NEEDED for Docker build
+
+# ===========================
+# Environment
+# ===========================
+.env
+.env.local
+.env.*.local
+
+# ===========================
+# IDE & Editor
+# ===========================
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+.sublime-workspace
+.project
+.classpath
+
+# ===========================
+# Build & Distribution
+# ===========================
+dist
+build
+out
+coverage
+
+# ===========================
+# Testing
+# ===========================
+__tests__
+__test__
+test
+tests
+*.test.ts
+*.spec.ts
+# vitest.config.ts - NEEDED for build
+.jest_cache
+.nyc_output
+
+# ===========================
+# Documentation & Config
+# ===========================
+README.md
+CONTRIBUTING.md
+LICENSE
+.eslintignore
+.eslintrc*
+.prettierignore
+.prettierrc*
+# tsconfig.json - NEEDED for build
+jest.config.js
+# vitest.config.js - May be needed
+
+# ===========================
+# CI/CD
+# ===========================
+.github
+.gitlab-ci.yml
+.circleci
+.travis.yml
+Jenkinsfile
+
+# ===========================
+# Docker
+# ===========================
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# ===========================
+# Logs
+# ===========================
+logs
+*.log
+
+# ===========================
+# Prisma
+# ===========================
+.prisma/client
+# prisma/migrations - NEEDED for database setup in Docker
+
+# ===========================
+# OS
+# ===========================
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# ===========================
+# Development
+# ===========================
+.turbo
+.cache
+tmp
+temp
+.pnpm-store
+.next

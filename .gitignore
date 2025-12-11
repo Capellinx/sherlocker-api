@@ -1,0 +1,99 @@
+# ===========================
+# Dependencies
+# ===========================
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# ===========================
+# Environment Variables
+# ===========================
+# Keep environment variables out of version control
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.production.local
+
+# ===========================
+# IDE & Editor
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# ===========================
+# Build & Distribution
+# ===========================
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# ===========================
+# Logs
+# ===========================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ===========================
+# Testing
+# ===========================
+coverage/
+.nyc_output/
+.jest_cache/
+*.lcov
+.test-cache/
+
+# ===========================
+# Runtime
+# ===========================
+.cache/
+tmp/
+temp/
+*.tmp
+
+# ===========================
+# Database & Prisma
+# ===========================
+/src/generated/prisma
+.prisma/client/
+prisma/migrations/
+
+# ===========================
+# OS
+# ===========================
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# ===========================
+# Misc
+# ===========================
+.turbo/
+.eslintcache
+.parcelcache
+dist/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*Sherlocker_API.postman_collection.json
