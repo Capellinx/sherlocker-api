@@ -4,14 +4,19 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: sherlocker-api
-    env_file:
-      - .env
     environment:
-      # Database connection using service name
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-postgres}
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: ${PORT:-3000}
+      EMAIL_FROM: ${EMAIL_FROM:-suporte@nexorum.shop}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_SECRET_NOACCESS: ${JWT_SECRET_NOACCESS}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      MIND_TOKEN: ${MIND_TOKEN}
+      ZYONPAY_PUBLIC_KEY: ${ZYONPAY_PUBLIC_KEY}
+      ZYONPAY_SECRET_KEY: ${ZYONPAY_SECRET_KEY}
     ports:
-      # Expose port 3000 internally - Cloudflare/proxy will handle external access
       - "${PORT:-3000}:${PORT:-3000}"
     depends_on:
       postgres:
@@ -20,13 +25,20 @@ services:
       - sherlocker-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:${PORT:-3000}/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:${PORT:-3000}/health",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     volumes:
-      # Logs persistence (optional)
       - app-logs:/app/logs
 
   postgres:
@@ -38,7 +50,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-      # Only expose if you need external access for management
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -46,7 +57,11 @@ services:
       - sherlocker-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
