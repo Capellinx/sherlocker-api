@@ -16,6 +16,7 @@ pnpm-debug.log*
 package-lock.json
 yarn.lock
 # pnpm-lock.yaml - NEEDED for Docker build
+!pnpm-lock.yaml
 
 # ===========================
 # Environment
