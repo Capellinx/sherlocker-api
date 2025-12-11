@@ -56,7 +56,7 @@ async function main() {
     data: {
       name: 'PLANO BUSINESS',
       description: 'Solução completa para negócios com recursos avançados.',
-      amount: 100, // R$ 1,00 em centavos (para testes)
+      amount: 74900, // R$ 1,00 em centavos (para testes)
       periodicity: 'DAYS',
       tokenCost: 1500, // 1.500 tokens inclusos
       isActive: true,

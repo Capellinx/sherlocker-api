@@ -3,7 +3,7 @@ import { makeProcessRecurringChargesUsecase } from "@/infrastructure/factories/p
 import { makeCheckExpiredPaymentsUsecase } from "@/infrastructure/factories/payment/check-expired-payments.factory.ts";
 
 export function startRecurringChargesJob() {
-  cron.schedule("* * * * *", async () => {
+  cron.schedule("0 0 * * *", async () => {
     try {
       const checkExpiredPaymentsUsecase = makeCheckExpiredPaymentsUsecase();
       await checkExpiredPaymentsUsecase.execute();
