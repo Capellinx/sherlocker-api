@@ -27,6 +27,18 @@ app.use(CorsMiddleware.execute);
 app.use(json());
 app.use(cookieParser());
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+   res.status(200).json({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      env: {
+         nodeEnv: process.env.NODE_ENV,
+         allowedOrigins: process.env.ALLOWED_ORIGINS
+      }
+   });
+});
+
 app.use(authRouter);
 app.use("/login", loginRouter);
 app.use("/onboarding/individual", onboardingIndividualRouter);
