@@ -6,6 +6,7 @@ dotenv.config();
 export const envSchema = z.object({
    DATABASE_URL: z.string().describe("Database URL"),
    PORT: z.coerce.number().default(3000).describe("Server port"),
+   ALLOWED_ORIGINS: z.string().default('*').describe('Allowed origins for CORS (comma-separated)'),
    JWT_SECRET: z.string().describe('Secret to validate JWT tokens'),
    JWT_SECRET_NOACCESS: z.string().describe('Secret for tokens without full access (pre-OTP validation)'),
    JWT_EXPIRES_IN: z.string().default('7d').describe('JWT token expiration time'),
